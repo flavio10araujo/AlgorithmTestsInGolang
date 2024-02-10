@@ -1,0 +1,68 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### Go ###
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+### Folders ###
+_obj
+_test
+.vscode
+
+### Backup ###
+*.bak
+*.backup
+*.orig
+
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### Terraformer ###
+terraform/.terraformer/
+terraform/.terragrunt
+terraform/.terraform/
+terraform_branch/.terraformer/
+terraform_branch/.terragrunt
+terraform_branch/.terraform/
+
+vendor/
+# Check in mocks saves having to generate them every time, just generate when they are changed?
+# mocks/
+
+app
+debug
+*.trace
+cucumber/logs/
+*.test
+event-ingestor
+.DS_Store
+
+# VSCode                 #
+##########################
+.history
+junk
+.vscode
