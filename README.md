@@ -2,6 +2,6 @@
 
 AlgorithmTestsInGolang
 
-Hello World.
+Hello World!
 
 ```
