@@ -35,43 +35,26 @@ func main() {
 
 	// Solution 02: sort the array, use two pointers opposite ways. T=O(n log n); S=O(1)
 
-	// Solution 03: iterate array and add each number and its index in a map[int][]int; iterate again and look for (target - nums[i]) in the map; then check the index
+	// Solution 03: iterate the array and add each number and its index in a map[int][]int; iterate again and look for (target - nums[i]) in the map; then check the index
 	// T=O(n); S=O(n)
+
+	// Solution 03b: iterate the array adding in the map and checking if the complement is in the map, everything in the same for.
+
 	ret = twoSum(nums, target)
 
 	print(ret[0], " : ", ret[1])
 }
 
 func twoSum(nums []int, target int) []int {
-	var ret = make([]int, 2)
-	var mymap = map[int][2]int{}
+	var mymap = make(map[int]int)
 
-	for i := range nums {
-		_, ok := mymap[nums[i]]
-		if !ok {
-			mymap[nums[i]] = [2]int{i, -1}
-		} else {
-			var mytemparray = mymap[nums[i]]
-			mytemparray[1] = i
-			mymap[nums[i]] = mytemparray
+	for i, num := range nums {
+		if index, ok := mymap[target-num]; ok {
+			return []int{index, i}
 		}
+
+		mymap[num] = i
 	}
 
-	for i := range nums {
-		var diff = target - nums[i]
-
-		_, ok := mymap[diff]
-		if ok {
-			ret[0] = i
-			var mytemparray = mymap[diff]
-			for j := range mytemparray {
-				if mytemparray[j] >= 0 && mytemparray[j] != i {
-					ret[1] = mytemparray[j]
-					return ret
-				}
-			}
-		}
-	}
-
-	return ret
+	return nil
 }
