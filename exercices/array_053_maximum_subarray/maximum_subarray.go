@@ -31,8 +31,7 @@ func maxSubarray(nums []int) int {
 
 	// Solution 02:
 
-	var maxTotal = nums[0]
-	var maxWindow = nums[0]
+	maxTotal, maxWindow := nums[0], nums[0]
 
 	for i := 1; i < len(nums); i++ {
 		if nums[i] > nums[i]+maxWindow {
