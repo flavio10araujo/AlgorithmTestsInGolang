@@ -1,6 +1,9 @@
 package main
 
-import "container/heap"
+import (
+	"container/heap"
+	"fmt"
+)
 
 type MinHeap []int
 
@@ -57,4 +60,13 @@ func (this *KthLargest) Add(val int) int {
 	heap.Push(this.heap, val)
 
 	return (*this.heap)[0]
+}
+
+func main() {
+	k := Constructor(3, []int{4, 5, 8, 2})
+	fmt.Println(k.Add(3))  // returns 4
+	fmt.Println(k.Add(5))  // returns 5
+	fmt.Println(k.Add(10)) // returns 5
+	fmt.Println(k.Add(9))  // returns 8
+	fmt.Println(k.Add(4))  // returns 8
 }
