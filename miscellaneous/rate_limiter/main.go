@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 	"time"
 )
 
@@ -11,39 +10,8 @@ const (
 	windowMs = 60_000
 )
 
-type RateLimiter struct {
-	requests map[string][]int64
-	mu       sync.Mutex
-}
-
-func NewRateLimiter() *RateLimiter {
-	return &RateLimiter{
-		requests: make(map[string][]int64),
-	}
-}
-
-func (r *RateLimiter) AllowRequest(userID string, now int64) bool {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-
-	queue := r.requests[userID]
-
-	for len(queue) > 0 && queue[0] <= now-windowMs {
-		queue = queue[1:]
-	}
-
-	r.requests[userID] = queue
-
-	if len(queue) >= limit {
-		return false
-	}
-
-	r.requests[userID] = append(queue, now)
-	return true
-}
-
 func main() {
-	rateLimiter := NewRateLimiter()
+	rateLimiter := NewRateLimiterV2()
 	now := time.Now().UnixMilli()
 	userIds := []string{"userA", "userB"}
 
