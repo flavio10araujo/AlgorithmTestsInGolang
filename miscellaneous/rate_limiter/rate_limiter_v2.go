@@ -22,28 +22,6 @@ func NewRateLimiterV2() *RateLimiterV2 {
 	}
 }
 
-func (r *RateLimiterV2) getOrCreateBucket(userID string) *userBucket {
-	// caminho rapido: leitura
-	r.mu.RLock()
-	b := r.buckets[userID]
-	r.mu.RUnlock()
-
-	if b != nil {
-		return b
-	}
-
-	// criacao (double-check)
-	r.mu.Lock()
-	defer r.mu.Unlock()
-
-	if b = r.buckets[userID]; b == nil {
-		b = &userBucket{}
-		r.buckets[userID] = b
-	}
-
-	return b
-}
-
 func (r *RateLimiterV2) AllowRequest(userID string, now int64) bool {
 	b := r.getOrCreateBucket(userID)
 
@@ -65,4 +43,26 @@ func (r *RateLimiterV2) AllowRequest(userID string, now int64) bool {
 	b.lastSeen = now
 
 	return true
+}
+
+func (r *RateLimiterV2) getOrCreateBucket(userID string) *userBucket {
+	// caminho rapido: leitura
+	r.mu.RLock()
+	b := r.buckets[userID]
+	r.mu.RUnlock()
+
+	if b != nil {
+		return b
+	}
+
+	// criacao (double-check)
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	if b = r.buckets[userID]; b == nil {
+		b = &userBucket{}
+		r.buckets[userID] = b
+	}
+
+	return b
 }
