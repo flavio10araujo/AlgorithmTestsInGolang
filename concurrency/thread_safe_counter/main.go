@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sync"
 )
 
@@ -14,7 +15,7 @@ type Counter interface {
 
 // A more idiomatic version using channels.
 // In terms of performance, this is not the best solution, but it is a good example of how to use channels to achieve thread safety.
-func channelCounter() {
+func channelCounter() int {
 	increment := make(chan int)
 	done := make(chan int)
 
@@ -41,7 +42,7 @@ func channelCounter() {
 	wg.Wait()
 	close(increment)
 
-	//fmt.Println(<-done)
+	return <-done
 }
 
 func main() {
@@ -63,8 +64,8 @@ func main() {
 
 	wg.Wait()
 
-	println(counter.Get())
+	fmt.Println(counter.Get())
 
 	// Using channels:
-	channelCounter()
+	fmt.Println(channelCounter())
 }
